@@ -4,9 +4,8 @@ from dscamera import DSCamera
 
 
 if __name__ == "__main__":
-    root_path = "./assets"
-    image_path = f"{root_path}/sample.jpg"
-    json_path = f"{root_path}/calibration.json"
+    image_path = f"assets/images/sample.jpg"
+    json_path = f"assets/jsons/calibration.json"
     
     # Load camera and image
     cam = DSCamera(json_path)

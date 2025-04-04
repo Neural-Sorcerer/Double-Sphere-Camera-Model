@@ -91,7 +91,7 @@ def run_inference_pipeline(args, freeze=0, resolution=FHD, save_fps=None, fps_li
         inference_speed_start = timer()
         
         # Image rectification
-        pinhole = cam.to_perspective(frame)
+        pinhole = cam.to_perspective(frame, img_size=(cap_height, cap_width), f=args.focal)
         equirectangular = cam.to_equirect(frame)
     
         inference_speed_end = timer()
@@ -136,7 +136,10 @@ def run_inference_pipeline(args, freeze=0, resolution=FHD, save_fps=None, fps_li
         print(f"Inference speed: {round(ms, 5)} ms")
         print("="*80)
 
-    print(f"Average FPS: {round(1 / ((timer() - start_avg) / (count-count_warm_up-count_skip)))}")
+    try:
+        print(f"Average FPS: {round(1 / ((timer() - start_avg) / (count-count_warm_up-count_skip)))}")
+    except:
+        print(f"Not enough frames: {(count_warm_up+count_skip)}")
 
     # Destroy all the windows
     cap.release()
@@ -147,13 +150,14 @@ def run_inference_pipeline(args, freeze=0, resolution=FHD, save_fps=None, fps_li
 
 
 def main():
-    json_path = "./assets/calibration.json"
-    video_path = os.path.join('samples', 'F-RGB.mp4')
+    json_path = "./assets/jsons/ICMS-F.json"
+    video_path = os.path.join('ICMS_samples', 'F-RGB.mp4')
     # video_path = "/home/max/Downloads/STORAGE/SCMS - Video - Results/test_video_driving/distraction_phone_normal.mp4"
     
     parser = ArgumentParser()
     parser.add_argument('--source', default=video_path, type=str, help='camera/video file path')
     parser.add_argument('--json-path', default=json_path, type=str, help='path to camera calibration parameters')
+    parser.add_argument('--focal', default=0.25, type=float, help='Zoom in/out')
     parser.add_argument('--duration', default=float('inf'), type=float, help='running time')
     parser.add_argument('--output-dir', default="output", type=str, help='output path')
     parser.add_argument('--save', action="store_true", help='save results')
@@ -167,24 +171,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-"""
-# Fisheye view
-                "intrinsics": {
-                    "fx": 485.485,
-                    "fy": 485.885,
-                    "cx": 949.413,
-                    "cy": 523.732,
-                    "xi": -0.189386,
-                    "alpha": 0.64201
-                    }
-
-# Rectangular view
-                "intrinsics": {
-                    "fx": 606.257,
-                    "fy": 546.661,
-                    "cx": 944.575,
-                    "cy": 525.592,
-                    "xi": 2.92628e-10,
-                    "alpha": 0.50456
-                    }
-"""
