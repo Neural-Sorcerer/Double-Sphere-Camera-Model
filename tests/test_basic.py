@@ -1,6 +1,5 @@
-import tempfile
-
 import pytest
+import tempfile
 
 from dscamera import DSCamera
 

@@ -1,12 +1,11 @@
-import json
-from typing import Dict, Optional, Tuple
-
 import cv2
+import json
 import numpy as np
+
+from typing import Dict, Optional, Tuple
 
 try:
     import torch
-
     with_torch = True
 except ImportError:
     with_torch = False
@@ -31,8 +30,8 @@ class DSCamera(object):
                 data = json.load(f)
             cam_calib_data = list(data.values())[0]
             intrinsic = cam_calib_data["intrinsics"][0]["intrinsics"]
-            _img_size = cam_calib_data["resolution"][0]  # [w, h]
-            img_size = (_img_size[1], _img_size[0])  # from [w, h] to [h, w]
+            _img_size = cam_calib_data["resolution"][0] # [w, h]
+            img_size = (_img_size[1], _img_size[0])     # from [w, h] to [h, w]
             camera_type = cam_calib_data["intrinsics"][0]["camera_type"]
             assert camera_type == "ds", "camera type should be ds"
         assert intrinsic is not None, "Please input json file or parameters."
@@ -125,7 +124,7 @@ class DSCamera(object):
 
         mx = (u - self.cx) / self.fx
         my = (v - self.cy) / self.fy
-        r2 = mx * mx + my * my
+        r2 = (mx * mx) + (my * my)
 
         # Check valid area
         s = 1 - (2 * self.alpha - 1) * r2
@@ -211,9 +210,7 @@ class DSCamera(object):
     def _warp_img(self, img, img_pts, valid_mask):
         # Remap
         img_pts = img_pts.astype(np.float32)
-        out = cv2.remap(
-            img, img_pts[..., 0], img_pts[..., 1], cv2.INTER_LINEAR
-        )
+        out = cv2.remap(img, img_pts[..., 0], img_pts[..., 1], cv2.INTER_LINEAR)
         out[~valid_mask] = 0.0
         return out
 

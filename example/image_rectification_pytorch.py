@@ -1,19 +1,23 @@
-import numpy as np
 import PIL
 import torch
+import numpy as np
 import torch.nn.functional as F
 from torchvision.transforms import ToPILImage, ToTensor
 
 from dscamera import DSCamera
 
-if __name__ == "__main__":
-    # Load camera and image
-    json_file = "./calibration.json"
-    cam = DSCamera(json_file)
-    img = np.array(PIL.Image.open("./sample.jpg"))
 
-    img_size = (512, 512)
+if __name__ == "__main__":
+    root_path = "./assets"
+    image_path = f"{root_path}/sample.jpg"
+    json_path = f"{root_path}/calibration.json"
+    
+    # Load camera and image
+    cam = DSCamera(json_path)
+    img = np.array(PIL.Image.open(image_path))
+
     f = 0.25
+    img_size = (512, 512)
     # Generate 3D points
     h, w = img_size
     z = f * min(img_size)
