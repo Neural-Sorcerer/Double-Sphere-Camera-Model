@@ -1,6 +1,6 @@
 # Custom ignore patterns
 # ********************************************
-samples/videos/
+ICMS_samples/
 # ********************************************
 
 # Byte-compiled / optimized / DLL files
