@@ -10,7 +10,7 @@ from dscamera import DSCamera
 if __name__ == "__main__":
     image_path = f"assets/images/sample.jpg"
     json_path = f"assets/jsons/calibration.json"
-    
+
     # Load camera and image
     cam = DSCamera(json_path)
     img = np.array(PIL.Image.open(image_path))

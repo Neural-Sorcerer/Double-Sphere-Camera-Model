@@ -6,11 +6,11 @@ from dscamera import DSCamera
 if __name__ == "__main__":
     image_path = f"assets/images/sample.jpg"
     json_path = f"assets/jsons/calibration.json"
-    
+
     # Load camera and image
     cam = DSCamera(json_path)
     img = cv2.imread(image_path)
-    
+
     # Image rectification
     perspective = cam.to_perspective(img)
     equirectangular = cam.to_equirect(img)

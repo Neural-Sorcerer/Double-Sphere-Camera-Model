@@ -4,16 +4,16 @@ Unofficial Python library of Double Sphere Camera Model for fisheye cameras.
 
 ## Create DCCM conda environment
 ```bash
-$ conda create --name DCCM python=3.11 -y
+conda create --name DCCM python=3.11 -y
 ```
 
 ```bash
-$ pip install opencv-python torch torchvision pytest
+pip install opencv-python torch torchvision pytest
 ```
 
 ## Run demo
 ```bash
-$ python demo.py --source [VIDEO_PATH] --device [CPU/CUDA] --save --deep-insight
+python demo.py --source [VIDEO_PATH] --json-path [PARAMETERS_JSON] --focal [ZOOM_VALUE] --save
 ```
 
 ## Camera calibration
@@ -24,12 +24,12 @@ Please check `assets` folder for fisheye image rectifications.
 
 Input fisheye image:
 
-<img src="./assets/sample.jpg" width="300px">
+<img src="./assets/images/sample.jpg" width="300px">
 
 Output perspective image:
 
-<img src="./assets/perspective.jpg" width="250px">
+<img src="./assets/images/perspective.jpg" width="250px">
 
 Output equirectangular image:
 
-<img src="./assets/equirectangular.jpg" width="500px">
+<img src="./assets/images/equirectangular.jpg" width="500px">
